@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <filter>
+    <filter-name>CoreFilter</filter-name>
+    <filter-class>com.sunrise.framework.core.CoreFilter</filter-class>
+    <init-param>
+      <param-name>init-class</param-name>
+      <param-value>com.sunrise.cgb.http.AppInit</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CoreFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+    
+    <filter>
+        <filter-name>DataSourceFilter</filter-name>
+        <filter-class>com.sunrise.framework.core.DataSourceFilter</filter-class>
+        <init-param>
+            <param-name>ds-config</param-name>
+            <param-value>WEB-INF/dsconfig.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>file-encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>validate-rule-dir</param-name>
+            <param-value>WEB-INF/rules</param-value>
+        </init-param>
+        <init-param>
+            <param-name>uncheck-datasource</param-name>
+            <param-value>DS_FRAMEWORK_SECURITY_VALIDATE_CODE,DS_USER_LOGIN,DS_SEND_TASK</param-value>
+        </init-param>
+        <init-param>
+            <param-name>security-check</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DataSourceFilter</filter-name>
+        <url-pattern>/framework.do</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>struts</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>struts</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>CGBGateWayReciver</servlet-name>
+        <servlet-class>com.sunrise.cgb.http.CGBGateWayServlet</servlet-class>
+    	<load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>CGBGateWayReciver</servlet-name>
+        <url-pattern>/WSServlet</url-pattern>
+    </servlet-mapping>
+    
+    <welcome-file-list>
+        <welcome-file>pages/index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/pages/framework/403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/framework/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/framework/500.jsp</location>
+    </error-page>
+</web-app>

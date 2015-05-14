@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+    <!-- CGB柜面网关通讯程序 添加发送任务接口 -->
+    <ds name="DS_SEND_TASK" type="url" func="">
+        <url><![CDATA[/orderReciver.action?method=sendTask]]></url>
+        <file></file>
+    </ds>
+    <!-- CGB柜面网关通讯程序 手动重发执行结果接口 -->
+    <ds name="DS_REVISE" type="url" func="">
+        <url><![CDATA[/orderReciver.action?method=startRevise]]></url>
+        <file></file>
+    </ds>
+    <!-- CGB柜面网关通讯程序 查看执行任务情况 -->
+    <ds name="DS_TASK_RUNNING_INFO" type="url" func="">
+        <url><![CDATA[/orderReciver.action?method=showInfo]]></url>
+        <file></file>
+    </ds>
+</datasources>

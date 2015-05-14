@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<common-query>
+    <!-- 执行器配置，需要执行器实现类完整名称 -->
+    <executors>
+        <exe></exe>
+    </executors>
+
+    <!-- 函数配置，需要函数实现类完整名称 -->
+    <functions>
+        <func></func>
+    </functions>
+
+    <!-- 查询预/后处理器配置，需要处理器实现类完整名称 -->
+    <processors>
+        <processor></processor>
+    </processors>
+</common-query>

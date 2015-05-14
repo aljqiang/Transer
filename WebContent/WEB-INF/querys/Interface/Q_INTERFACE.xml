@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query-config>
+    <!-- 宣传活动信息数量 -->
+    <query id="Q_ACT_INFO_CNT" type="pagelist" result="easyui">
+        <stmt><![CDATA[   
+                	select count(*) 
+					from CD_EXP_PROMOTE_MARK
+					where STATUS_FLG = 'Y'
+						<#if CUST_ID?? && CUST_ID != "">
+						and CUST_ID = [CUST_ID]
+						</#if>
+						<#if BANK_ID?? && BANK_ID != "">
+						and BANK_ID = [BANK_ID]
+						</#if>
+						<#if OFFER_END_DATE_START?? && OFFER_END_DATE_START != "">
+						and OFFER_END_DATE >= to_date([OFFER_END_DATE_START],'yyyyMMdd')
+						</#if>
+						<#if OFFER_END_DATE_END?? && OFFER_END_DATE_END != "">
+						and OFFER_END_DATE <= to_date([OFFER_END_DATE_END],'yyyyMMdd')
+						</#if>
+		]]></stmt>
+    </query>
+   	<!-- 宣传活动信息查询 -->
+    <query id="Q_ACT_INFO_QUERY" type="pagelist" result="easyui">
+        <stmt><![CDATA[               
+             SELECT * FROM (
+                SELECT b.*, ROWNUMBER() OVER() AS RN FROM (
+                	select 
+	                	BANK_ID,
+	                	CUST_ID,
+						CAMPAIGN_CD,
+						CAMPAIGN_NM,
+						COMMUNICATION_CD,
+						COMMUNICATION_NM,
+						TREAT_GIFT_CODE,
+						OFFER_DESC,
+						to_char(OFFER_END_DATE,'yyyymmdd') as OFFER_END_DATE,
+						to_char(CONTACT_MONTH,'yyyymmdd') as CONTACT_MONTH,
+						RESPTRACKING_CD,
+						CARD_ID,
+						CELL_NAME
+					from CD_EXP_PROMOTE_MARK
+					where STATUS_FLG = 'Y'
+						<#if CUST_ID?? && CUST_ID != "">
+						and CUST_ID = [CUST_ID]
+						</#if>
+						<#if BANK_ID?? && BANK_ID != "">
+						and BANK_ID = [BANK_ID]
+						</#if>
+						<#if OFFER_END_DATE_START?? && OFFER_END_DATE_START != "">
+						and OFFER_END_DATE >= to_date([OFFER_END_DATE_START],'yyyyMMdd')
+						</#if>
+						<#if OFFER_END_DATE_END?? && OFFER_END_DATE_END != "">
+						and OFFER_END_DATE <= to_date([OFFER_END_DATE_END],'yyyyMMdd')
+						</#if>
+                
+                ) AS b
+             ) AS a WHERE a.RN > [startPage] AND RN <= [endPage]                                 
+		]]></stmt>
+    </query>
+    <!-- 宣传活动信息数量 -->
+    <query id="Q_REWARD_INFO_CNT" type="pagelist" result="easyui">
+        <stmt><![CDATA[   
+                	select count(*) 
+					from CD_EXP_REWARD_MARK
+					where STATUS_FLG = 'Y'
+	<#if CUST_ID?? && CUST_ID != "">and CUST_ID = [CUST_ID]</#if>
+	<#if BANK_ID?? && BANK_ID != "">and BANK_ID = [BANK_ID]</#if>
+	<#if OFFER_END_DATE_START?? && OFFER_END_DATE_START != "">
+	and CONTACT_MONTH >= to_date([OFFER_END_DATE_START],'yyyyMMdd')
+	</#if>
+	<#if OFFER_END_DATE_END?? && OFFER_END_DATE_END != "">
+	and CONTACT_MONTH <= to_date([OFFER_END_DATE_END],'yyyyMMdd')
+	</#if>
+		]]></stmt>
+    </query>
+   	<!-- 客户奖励信息查询 -->
+    <query id="Q_REWARD_INFO_QUERY" type="pagelist" result="easyui">
+        <stmt><![CDATA[            
+           SELECT * FROM (
+                SELECT b.*, ROWNUMBER() OVER() AS RN FROM (
+                	select 
+						BANK_ID,
+						CUST_ID,
+						CAMPAIGN_CD,
+						CAMPAIGN_NM,
+						COMMUNICATION_CD,
+						COMMUNICATION_NM,
+						TREAT_GIFT_CODE,
+						TREATMENT_DESC,
+						TREAT_TYPE,
+						REWARD_AMT,
+						to_char(CONTACT_MONTH,'yyyymmdd') as CONTACT_MONTH,
+						CARD_ID,
+						CELL_NAME,
+						RESPTRACKING_CD
+					from CD_EXP_REWARD_MARK
+					where STATUS_FLG = 'Y'
+						<#if CUST_ID?? && CUST_ID != "">
+						and CUST_ID = [CUST_ID]
+						</#if>
+						<#if BANK_ID?? && BANK_ID != "">
+						and BANK_ID = [BANK_ID]
+						</#if>
+						<#if OFFER_END_DATE_START?? && OFFER_END_DATE_START != "">
+						and CONTACT_MONTH >= to_date([OFFER_END_DATE_START],'yyyyMMdd')
+						</#if>
+						<#if OFFER_END_DATE_END?? && OFFER_END_DATE_END != "">
+						and CONTACT_MONTH <= to_date([OFFER_END_DATE_END],'yyyyMMdd')
+						</#if>
+                
+                ) AS b
+             ) AS a WHERE a.RN > [startPage] AND RN <= [endPage]            
+		]]></stmt>
+    </query>
+    
+</query-config>
